@@ -22,10 +22,11 @@ for num in range(N):
     if lst[num] < 0:   
         if is_special(lst[num]):     #if num is special
             specials+=1
-    if specials%17 in tails.keys():  #tail to cut off with current number of specials
-        tails[specials%17]=min(cursum,tails[specials%17]) #minimal sum of numbers
+    if specials%K in tails.keys():  #tail to cut off with current number of specials
+        maxsum=max(maxsum, cursum-tails[specials%K])
+        tails[specials%K]=min(cursum,tails[specials%K]) #minimal sum of numbers
                                               # behind current tails
     else:
-        tails[specials%17]=cursum   #if we dont - add.
-    maxsum=max(maxsum, cursum-tails[specials%17])
+        tails[specials%K]=cursum   #if we dont - add.
+    
 print(maxsum) # a 11527919(+); b 168873874(-;168804823)
