@@ -16,3 +16,6 @@ for i in range(3, len(data)):
     worm.append(data[i])
     worm.pop(0)
 print(tres)
+"['A', 'D', 'C']": 494
+"['C', 'B', 'A']": 498
+"['D', 'A', 'D']": 506
