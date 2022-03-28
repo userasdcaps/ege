@@ -10,19 +10,26 @@ curlen=0
 cursum=0
 bestlen=0
 bestsum=0
-tails={} # {xBocT: [[curlen, cursum, lst[i]], [curlen_1, cursum_1, lst[i_1]]]}
+best=0
+tails={(0,lst[0]):[0,0]} ## (summ%modsum ,next num) : length
 for i in range(n):
-    cursum+=lst[i]
     curlen+=1
-    if cursum%modsum in tails.keys(): # best sum = curent sum - tail
-        for a in range(len(tails[cursum%modsum])):
-            #print(a, lst[i], tails[cursum%modsum][a][1], tails[cursum%modsum][a][1] + lst[i], (tails[cursum%modsum][a][1] + lst[i]) % modend)
-            if (tails[cursum%modsum][a][2] + lst[i]) % modend==0:
-                #print('*') 
-                bestlen=max(bestlen, curlen - tails[cursum%modsum][a][0])
-        tails[cursum%modsum].append([curlen,cursum,lst[i]])
-    else: #addtail
-        tails[cursum%modsum]=[ [curlen,cursum,lst[i]] ]
-    #print(i, lst[i], lst[i] % modsum, cursum, cursum % modsum)
-#print(tails)
-print(bestsum)
+    cursum+=lst[i]
+    #print(i, lst[i], cursum, cursum % modsum, curlen, lst[0]+lst[i], lst[0]+lst[i] % 73)
+    #print('i want ',  (modend - lst[i]%modend)%modend)
+    if (cursum%modsum, (modend - lst[i]%modend)%modend) in tails:
+        to_cut = tails[(cursum%modsum, (modend - lst[i]%modend)%modend)]
+        #print('21!\n',i, lst[i], cursum - to_cut[1], curlen - to_cut[0])
+        best=max(curlen-to_cut[0],best)
+        
+    
+    if i < len(lst)-1:
+        if (cursum%modsum, lst[i+1]%modend) in tails:
+            if cursum <= tails[(cursum%modsum, lst[i+1]%modend)][1]:
+                tails[(cursum%modsum, lst[i+1]%modend)] = [curlen, cursum]
+        else:
+            tails[(cursum%modsum, lst[i+1]%modend)] = [curlen, cursum]
+    
+    #print(tails)
+    #print()
+print(best)
