@@ -1,9 +1,13 @@
-for x in range(1,100):
-    X=x
-    a=0
-    b=0
-    while x > 0:
-        a+=1
-        b = b + (9 - x % 10)
-        x //= 10
-    print(X,a,b)
+from itertools import permutations
+src = input()
+perm = list(permutations(src))
+good = []
+for p in perm:
+    wrd = ''.join(p)
+    #print(wrd)
+    if wrd[0] == src[0] and wrd[-1] == src[-1]:
+        good.append(wrd)
+good.sort()
+print(len(good))
+for i in good:
+    print(i)
